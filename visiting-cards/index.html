@@ -1,0 +1,441 @@
+<title>MaxConvert Card Studies</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap">
+<style>
+/* Layout: a dark print-studio desk. Each option is one row: spec sheet on the left, front + back of the card on the right. */
+:root {
+  --desk: #0c0c0d;
+  --desk-2: #151516;
+  --line: #29292b;
+  --ink: #f4f3f0;
+  --ink-2: #a8a7a3;
+  --ink-3: #6e6d6a;
+  --orange: #FF5B14;
+  --f-disp: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--desk);
+  background-image: radial-gradient(1200px 600px at 70% -10%, #1c1c1e 0%, transparent 60%);
+  color: var(--ink);
+  font-family: var(--f-disp);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-block: 56px 80px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 700px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+
+/* ---------- header ---------- */
+.top { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 48px; align-items: end; padding-bottom: 40px; border-bottom: 1px solid var(--line); }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); display: flex; align-items: center; gap: 10px; }
+.eyebrow i { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); display: inline-block; }
+h1 { font-size: clamp(34px, 5vw, 58px); line-height: 1.02; letter-spacing: -.035em; margin: 18px 0 18px; font-weight: 700; text-wrap: balance; }
+h1 b { color: var(--orange); font-weight: 700; }
+.lede { color: var(--ink-2); max-width: 58ch; margin: 0; }
+
+.panel { background: var(--desk-2); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 14px; }
+.panel h2 { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); margin: 0; font-weight: 500; }
+.swatch-row { display: flex; gap: 10px; align-items: center; }
+.swatch-row input[type="color"] { width: 44px; height: 38px; border: 1px solid var(--line); border-radius: 6px; background: none; padding: 2px; cursor: pointer; flex: none; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.fields label { display: grid; gap: 3px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); min-width: 0; }
+.fields .wide { grid-column: 1 / -1; }
+input[type="text"] { width: 100%; min-width: 0; background: var(--desk); border: 1px solid var(--line); color: var(--ink); border-radius: 6px; padding: 8px 10px; font: 500 13px var(--f-mono); letter-spacing: 0; text-transform: none; }
+input:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.note { font-size: 12.5px; color: var(--ink-3); margin: 0; }
+
+/* ---------- options ---------- */
+.opt { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 48px; padding-block: 64px; border-bottom: 1px solid var(--line); }
+.meta { display: grid; gap: 14px; align-content: start; }
+.tag { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; color: var(--orange); text-transform: uppercase; }
+.meta h3 { font-size: 32px; letter-spacing: -.03em; line-height: 1.05; margin: 0; font-weight: 700; }
+.meta p { color: var(--ink-2); margin: 0; }
+.meta dl { margin: 6px 0 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.meta dl div { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.meta dt { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); padding-top: 2px; }
+.meta dd { margin: 0; font-size: 13.5px; color: var(--ink); line-height: 1.45; }
+.pick { justify-self: start; font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--desk); background: var(--orange); padding: 4px 8px; border-radius: 3px; }
+
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-content: center; }
+figure { margin: 0; display: grid; gap: 14px; }
+figcaption { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); display: flex; justify-content: space-between; }
+
+.stage { perspective: 1000px; }
+.card {
+  --rx: 0deg; --ry: 0deg; --mx: 30%; --my: 20%;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 85 / 55;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1);
+  border-radius: 3px;
+  box-shadow: var(--edge, 0 1.5px 0 #000), 0 24px 40px -14px rgba(0,0,0,.75), 0 6px 12px -4px rgba(0,0,0,.5);
+  cursor: grab;
+  touch-action: pan-y;
+}
+.card.live { transition: transform .08s linear; }
+.card svg { display: block; width: 100%; height: 100%; border-radius: inherit; }
+.card .glare { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,.22), rgba(255,255,255,0) 55%); mix-blend-mode: soft-light; }
+.card.rounded { border-radius: calc(40 / 850 * 100%) / calc(40 / 550 * 100%); }
+
+.foot { padding-top: 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.foot h4 { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); margin: 0 0 8px; font-weight: 500; }
+.foot p { color: var(--ink-2); margin: 0; font-size: 14px; }
+
+@media (max-width: 980px) {
+  .top { grid-template-columns: 1fr; gap: 28px; }
+  .opt { grid-template-columns: 1fr; gap: 28px; padding-block: 48px; }
+  .foot { grid-template-columns: 1fr; gap: 22px; }
+}
+@media (max-width: 600px) {
+  .pair { grid-template-columns: 1fr; gap: 28px; }
+  .fields { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .card, .card.live { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow"><i></i>Max Convert Media · business card studies</div>
+      <h1>Five cards that feel like <b>MaxConvert.</b></h1>
+      <p class="lede">Black, white and your orange, nothing else. Each option pairs a print technique you can feel (ribs, raised dots, foil, spot gloss, a coloured core) with something from your brand: the pipeline, the arrow, the lead journey, the full stop in your wordmark. Move your cursor or finger across any card to tilt it under the light.</p>
+    </div>
+    <form class="panel" id="controls" autocomplete="off">
+      <h2>Match your logo</h2>
+      <div class="swatch-row">
+        <input type="color" id="oPick" value="#ff5b14" aria-label="Pick logo orange">
+        <input type="text" id="oHex" value="#FF5B14" aria-label="Logo orange hex code" maxlength="7" spellcheck="false">
+      </div>
+      <p class="note">Your reference photos and logo file didn't come through, so the orange is a stand-in. Paste your logo's exact hex and every card updates.</p>
+      <h2>Card details</h2>
+      <div class="fields">
+        <label>Name<input type="text" id="fName"></label>
+        <label>Title<input type="text" id="fTitle"></label>
+        <label>Phone<input type="text" id="fPhone"></label>
+        <label>Website<input type="text" id="fWeb"></label>
+        <label class="wide">Email<input type="text" id="fEmail"></label>
+      </div>
+    </form>
+  </header>
+
+  <main id="options"></main>
+
+  <section class="foot" aria-label="Print notes">
+    <div><h4>Size &amp; setup</h4><p>85 × 55 mm, 3 mm bleed on all sides, keep text 4 mm inside the trim. Artwork for every option is built on that grid.</p></div>
+    <div><h4>Getting the orange right</h4><p>Screens and paper show orange differently. Send your printer the Pantone code from your logo guide and ask for an ink or foil drawdown before the full run.</p></div>
+    <div><h4>Tactile finishes</h4><p>Deboss, emboss and letterpress need thick cotton or duplexed board (600 gsm and up) so the impression doesn't show through to the other side.</p></div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var W = 850, H = 550;
+  var BLACK = '#0B0B0C', PAPER = '#F5F4F1';
+  var FD = 'font-family="Space Grotesk, Helvetica Neue, Arial, sans-serif"';
+  var FM = 'font-family="JetBrains Mono, SF Mono, Menlo, monospace"';
+
+  var state = {
+    orange: '#FF5B14',
+    name: 'Zobayed Al Neon',
+    title: 'CRM Architect',
+    phone: '+1 555 014 2290',
+    email: 'zobayed@maxconvertmedia.com',
+    web: 'maxconvertmedia.com'
+  };
+  try { var saved = JSON.parse(localStorage.getItem('mcm-cards') || 'null'); if (saved) Object.assign(state, saved); } catch (e) {}
+  function save() { try { localStorage.setItem('mcm-cards', JSON.stringify(state)); } catch (e) {} }
+
+  function rgb(h) { h = h.replace('#', ''); if (h.length === 3) h = h.replace(/./g, '$&$&'); var n = parseInt(h, 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+  function mix(a, b, t) { var A = rgb(a), B = rgb(b); return '#' + A.map(function (v, i) { return Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0'); }).join(''); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ---------- shared SVG pieces ---------- */
+  function defs(id, O) {
+    return '<defs>' +
+      '<filter id="' + id + '-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 -1.4 1.1"/></filter>' +
+      '<filter id="' + id + '-soft" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.3"/></filter>' +
+      '<linearGradient id="' + id + '-foil" class="foil-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="380" y2="250" spreadMethod="reflect">' +
+        '<stop offset="0" stop-color="' + mix(O, '#000', .55) + '"/>' +
+        '<stop offset=".2" stop-color="' + O + '"/>' +
+        '<stop offset=".36" stop-color="' + mix(O, '#fff', .72) + '"/>' +
+        '<stop offset=".48" stop-color="' + O + '"/>' +
+        '<stop offset=".66" stop-color="' + mix(O, '#000', .38) + '"/>' +
+        '<stop offset=".82" stop-color="' + mix(O, '#fff', .45) + '"/>' +
+        '<stop offset="1" stop-color="' + mix(O, '#000', .2) + '"/>' +
+      '</linearGradient>' +
+      '<radialGradient id="' + id + '-dot" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="' + PAPER + '"/><stop offset="1" stop-color="' + mix(PAPER, '#000', .07) + '"/></radialGradient>' +
+      '<radialGradient id="' + id + '-odot" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="' + mix(O, '#fff', .35) + '"/><stop offset=".6" stop-color="' + O + '"/><stop offset="1" stop-color="' + mix(O, '#000', .25) + '"/></radialGradient>' +
+      '</defs>';
+  }
+  function grain(id, op, blend) { return '<rect width="' + W + '" height="' + H + '" filter="url(#' + id + '-grain)" opacity="' + op + '" style="mix-blend-mode:' + blend + '"/>'; }
+  function mark(x, y, s, fill, ink) {
+    return '<rect x="' + x + '" y="' + y + '" width="' + s + '" height="' + s + '" rx="' + (s * .2) + '" fill="' + fill + '"/>' +
+      '<text x="' + (x + s / 2) + '" y="' + (y + s * .73) + '" text-anchor="middle" font-size="' + (s * .68) + '" font-weight="700" letter-spacing="' + (-s * .02) + '" fill="' + ink + '" ' + FD + '>M</text>';
+  }
+  function wordmark(x, y, size, fill, dot, anchor) {
+    return '<text x="' + x + '" y="' + y + '" font-size="' + size + '" font-weight="700" letter-spacing="' + (-size * .03) + '" fill="' + fill + '" text-anchor="' + (anchor || 'start') + '" ' + FD + '>MaxConvert<tspan fill="' + dot + '">.</tspan></text>';
+  }
+  function mono(x, y, size, fill, text, extra) {
+    return '<text x="' + x + '" y="' + y + '" font-size="' + size + '" fill="' + fill + '" letter-spacing="' + (size * .16) + '" ' + FM + ' ' + (extra || '') + '>' + esc(text) + '</text>';
+  }
+  function details(x, y, c) {
+    var s = '<text x="' + x + '" y="' + y + '" font-size="50" font-weight="700" letter-spacing="-1.3" fill="' + c.name + '" ' + FD + '>' + esc(state.name) + '</text>';
+    s += mono(x, y + 44, 18, c.title, state.title.toUpperCase());
+    var rows = [state.phone, state.email, state.web];
+    rows.forEach(function (r, i) {
+      var ry = y + 128 + i * 36;
+      if (c.bullet) s += '<circle cx="' + (x + 5) + '" cy="' + (ry - 8) + '" r="5" fill="' + c.bullet + '"/>';
+      s += '<text x="' + (x + (c.bullet ? 26 : 0)) + '" y="' + ry + '" font-size="23" fill="' + c.line + '" ' + FM + '>' + esc(r) + '</text>';
+    });
+    return s;
+  }
+  /* letterpress-style deboss: dark lip top-left, light lip bottom-right, flat floor on top */
+  function debossText(attrs, text, floor, dark, light, d) {
+    d = d || 2;
+    return '<text ' + attrs + ' transform="translate(' + (-d) + ',' + (-d) + ')" fill="' + dark + '">' + text + '</text>' +
+      '<text ' + attrs + ' transform="translate(' + d + ',' + d + ')" fill="' + light + '">' + text + '</text>' +
+      '<text ' + attrs + ' fill="' + floor + '">' + text + '</text>';
+  }
+  function svg(id, O, inner) {
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" role="img">' + defs(id, O) + inner + '</svg>';
+  }
+
+  /* ---------- the five designs ---------- */
+  var designs = [
+    {
+      key: 'ribs', letter: 'Option A', name: 'Pipeline Ribs',
+      pitch: 'Vertical ribs pressed into black cotton, tightening from left to right like a lead speeding through your pipeline. Run a thumb across it and you feel the pace pick up. One rib is filled orange.',
+      specs: [['Stock', '700 gsm black cotton board, duplexed 2 × 350 gsm'], ['Front', 'Blind deboss ribs, orange foil mark, white foil wordmark'], ['Back', 'White foil details, orange foil title'], ['Edges', 'Painted orange on all four sides'], ['Feel', 'Grooves you can count, deepest on the right']],
+      edgeFront: function (O) { return '0 0 0 1px ' + O + ', 0 2.5px 0 ' + O; },
+      edgeBack: function (O) { return '0 0 0 1px ' + O + ', 0 2.5px 0 ' + O; },
+      front: function (id, O) {
+        var base = '#111112', s = '<rect width="' + W + '" height="' + H + '" fill="' + base + '"/>';
+        var x = 350, gap = 28, ribs = [];
+        while (x < W + 10) { ribs.push(x); gap = Math.max(5.5, gap * .9); x += gap; }
+        var hot = Math.floor(ribs.length * .42);
+        ribs.forEach(function (x, i) {
+          s += '<rect x="' + (x - 2.4) + '" y="0" width="1.2" height="' + H + '" fill="#000" opacity=".9"/>';
+          s += '<rect x="' + (x - 1.2) + '" y="0" width="2.6" height="' + H + '" fill="' + (i === hot ? O : '#070707') + '"/>';
+          s += '<rect x="' + (x + 1.4) + '" y="0" width="1" height="' + H + '" fill="#fff" opacity="' + (i === hot ? .35 : .11) + '"/>';
+        });
+        s += mark(56, 56, 66, O, base);
+        s += mono(56, 438, 17, '#7a7975', 'AI-ADAPTIVE CRM SYSTEMS');
+        s += wordmark(56, 494, 42, PAPER, O);
+        return svg(id, O, s + grain(id, .1, 'overlay'));
+      },
+      back: function (id, O) {
+        var base = '#111112', s = '<rect width="' + W + '" height="' + H + '" fill="' + base + '"/>';
+        for (var x = 724; x < W + 6; x += 7) {
+          s += '<rect x="' + (x - 1.2) + '" y="0" width="2.4" height="' + H + '" fill="#060606"/><rect x="' + (x + 1.2) + '" y="0" width="1" height="' + H + '" fill="#fff" opacity=".1"/>';
+        }
+        s += mono(56, 86, 17, O, 'MAX CONVERT MEDIA');
+        s += details(56, 236, { name: PAPER, title: O, line: mix(PAPER, base, .3) });
+        return svg(id, O, s + grain(id, .1, 'overlay'));
+      }
+    },
+    {
+      key: 'dots', letter: 'Option B', name: 'Signal Grid', rounded: true,
+      pitch: 'A raised dot grid across white cotton with no ink, so it reads as pure texture. Your “->” arrow from the site is picked out in orange dots, the one place where ink meets the emboss.',
+      specs: [['Stock', '600 gsm white cotton, duplexed to black board'], ['Front', 'Blind emboss dot grid; arrow in orange letterpress with registered emboss'], ['Back', 'White ink on black, orange dot bullets'], ['Corners', '4 mm rounded'], ['Feel', 'Raised dots across the whole face, like braille']],
+      edgeFront: function () { return '0 1.5px 0 #d8d6d0, 0 3px 0 #111'; },
+      edgeBack: function () { return '0 1.5px 0 #000, 0 3px 0 #d8d6d0'; },
+      front: function (id, O) {
+        var s = '<rect width="' + W + '" height="' + H + '" fill="' + PAPER + '"/>';
+        var arrow = {};
+        [[0, 3], [1, 3], [2, 3], [3, 3], [4, 3], [5, 3], [6, 3], [7, 3], [4, 0], [5, 1], [6, 2], [6, 4], [5, 5], [4, 6]].forEach(function (p) { arrow[(p[0] + 13) + ',' + (p[1] + 3)] = 1; });
+        var shadows = '', tops = '';
+        for (var c = 0; c < 23; c++) for (var r = 0; r < 14; r++) {
+          var cx = 45 + c * 34, cy = 54 + r * 34;
+          if (cx < 360 && cy > 400) continue;
+          var hot = arrow[c + ',' + r], rad = hot ? 5.6 : 4.4;
+          shadows += '<circle cx="' + (cx + 1.6) + '" cy="' + (cy + 1.9) + '" r="' + (rad + .4) + '"/>';
+          tops += '<circle cx="' + (cx - 1) + '" cy="' + (cy - 1) + '" r="' + rad + '" fill="#fff"/>' +
+                  '<circle cx="' + cx + '" cy="' + cy + '" r="' + rad + '" fill="url(#' + id + (hot ? '-odot' : '-dot') + ')"/>';
+        }
+        s += '<g fill="#000" opacity=".2" filter="url(#' + id + '-soft)">' + shadows + '</g>' + tops;
+        s += mark(48, 438, 58, BLACK, PAPER);
+        s += wordmark(122, 482, 36, BLACK, O);
+        return svg(id, O, s + grain(id, .16, 'multiply'));
+      },
+      back: function (id, O) {
+        var base = BLACK, s = '<rect width="' + W + '" height="' + H + '" fill="' + base + '"/>';
+        for (var c = 0; c < 5; c++) for (var r = 0; r < 4; r++) {
+          var cx = 660 + c * 34, cy = 70 + r * 34;
+          s += '<circle cx="' + (cx - 1) + '" cy="' + (cy - 1) + '" r="4.4" fill="#fff" opacity=".1"/><circle cx="' + (cx + 1) + '" cy="' + (cy + 1) + '" r="4.4" fill="#000"/><circle cx="' + cx + '" cy="' + cy + '" r="4.4" fill="#141415"/>';
+        }
+        s += details(56, 236, { name: PAPER, title: O, line: mix(PAPER, base, .25), bullet: O });
+        s += wordmark(794, 494, 26, mix(PAPER, base, .45), O, 'end');
+        return svg(id, O, s + grain(id, .12, 'overlay'));
+      }
+    },
+    {
+      key: 'foil', letter: 'Option C', name: 'Molten Foil', pick: true,
+      pitch: 'Your ice-gold reference, re-cut in brand orange. An oversized foil “M” bleeds off the edge of a soft-touch black card and flashes as it catches the light. Tilt it to see the sheen move.',
+      specs: [['Stock', '32 pt black board, soft-touch laminate both sides'], ['Front', 'Orange metallic hot foil M, full bleed'], ['Back', 'Foil name and hairline, white offset text'], ['Foil', 'Custom orange metallic or holographic; approve a drawdown against your logo'], ['Feel', 'Velvet surface with smooth, slightly raised foil']],
+      edgeFront: function () { return '0 2px 0 #050505'; },
+      edgeBack: function () { return '0 2px 0 #050505'; },
+      front: function (id, O) {
+        var base = '#0E0E0F', s = '<rect width="' + W + '" height="' + H + '" fill="' + base + '"/>';
+        s += '<text x="612" y="706" text-anchor="middle" font-size="820" font-weight="700" letter-spacing="-24" fill="url(#' + id + '-foil)" stroke="' + mix(O, '#000', .55) + '" stroke-width="1.5" ' + FD + '>M</text>';
+        s += wordmark(52, 92, 34, PAPER, O);
+        s += mono(52, 134, 17, '#7a7975', 'AI-ADAPTIVE CRM SYSTEMS');
+        return svg(id, O, s + grain(id, .08, 'overlay'));
+      },
+      back: function (id, O) {
+        var base = '#0E0E0F', s = '<rect width="' + W + '" height="' + H + '" fill="' + base + '"/>';
+        s += details(56, 196, { name: 'url(#' + id + '-foil)', title: mix(PAPER, base, .2), line: mix(PAPER, base, .3) });
+        s += '<rect x="56" y="272" width="190" height="2" fill="url(#' + id + '-foil)"/>';
+        s += mark(738, 438, 56, 'url(#' + id + '-foil)', base);
+        return svg(id, O, s + grain(id, .08, 'overlay'));
+      }
+    },
+    {
+      key: 'journey', letter: 'Option D', name: 'Lead Journey',
+      pitch: 'The 00:00 to 01:12 lead journey from your homepage becomes the card. The front is white and quiet with a glossy raised timeline; flip it and the back is a full flood of brand orange with a pressed “M”.',
+      specs: [['Stock', '450 gsm uncoated bright white, duplexed to an orange-flooded sheet'], ['Front', 'Black + orange spot ink, timeline in raised spot UV'], ['Back', 'Orange Pantone flood, blind deboss M, black text'], ['Feel', 'Glossy ridge along the timeline, pressed M on the back']],
+      edgeFront: function (O) { return '0 1.5px 0 #d8d6d0, 0 3px 0 ' + mix(O, '#000', .1); },
+      edgeBack: function () { return '0 1.5px 0 ' + mix(state.orange, '#000', .2) + ', 0 3px 0 #d8d6d0'; },
+      front: function (id, O) {
+        var s = '<rect width="' + W + '" height="' + H + '" fill="' + PAPER + '"/>';
+        s += mark(52, 52, 52, BLACK, PAPER);
+        s += wordmark(118, 91, 30, BLACK, O);
+        var xs = [70, 300, 540, 780], t = ['00:00', '00:09', '00:48', '01:12'], l = ['lead in', 'ai replies', 'qualified', 'booked'];
+        s += '<line x1="70" y1="292" x2="780" y2="292" stroke="' + mix(O, '#fff', .55) + '" stroke-width="5" stroke-linecap="round" transform="translate(-1,-1.5)"/>';
+        s += '<line x1="70" y1="292" x2="780" y2="292" stroke="' + O + '" stroke-width="4" stroke-linecap="round"/>';
+        xs.forEach(function (x, i) {
+          var last = i === xs.length - 1, a = i === 0 ? 'start' : last ? 'end' : 'middle', lx = i === 0 ? x - 10 : last ? x + 10 : x;
+          s += '<circle cx="' + x + '" cy="292" r="10" fill="' + (last ? O : PAPER) + '" stroke="' + O + '" stroke-width="3"/>';
+          s += mono(lx, 258, 20, BLACK, t[i], 'text-anchor="' + a + '" font-weight="500"');
+          s += mono(lx, 340, 15, '#7d7b75', l[i].toUpperCase(), 'text-anchor="' + a + '"');
+        });
+        s += '<text x="52" y="444" font-size="32" font-weight="700" letter-spacing="-1" fill="' + BLACK + '" ' + FD + '>Your ads bring the leads.</text>';
+        s += '<text x="52" y="486" font-size="32" font-weight="700" letter-spacing="-1" fill="' + BLACK + '" ' + FD + '>We make sure they <tspan fill="' + O + '">book</tspan>.</text>';
+        return svg(id, O, s + grain(id, .16, 'multiply'));
+      },
+      back: function (id, O) {
+        var s = '<rect width="' + W + '" height="' + H + '" fill="' + O + '"/>';
+        s += debossText('x="660" y="560" text-anchor="middle" font-size="640" font-weight="700" letter-spacing="-20" ' + FD, 'M', mix(O, '#000', .05), mix(O, '#000', .3), mix(O, '#fff', .3), 2.5);
+        s += mono(56, 86, 17, BLACK, 'MAX CONVERT MEDIA', 'font-weight="500"');
+        s += details(56, 236, { name: BLACK, title: mix(BLACK, O, .25), line: BLACK });
+        return svg(id, O, s + grain(id, .14, 'multiply'));
+      }
+    },
+    {
+      key: 'triplex', letter: 'Option E', name: 'Triplex Core',
+      pitch: 'The most minimal of the five. Three plies of black, orange and white are bonded into one thick card, so a line of brand orange runs around every edge. The full stop in “MaxConvert.” is pressed deep and foiled orange.',
+      specs: [['Stock', 'Triplex 3 × 300 gsm: black / orange / white (about 1.2 mm thick)'], ['Front', 'White foil wordmark, orange foil + deep deboss full stop'], ['Back', 'Black letterpress on white'], ['Edges', 'Orange core visible on all four sides'], ['Feel', 'Rigid and heavy, with one deep dot under your thumb']],
+      edgeFront: function (O) { return '0 1.5px 0 #1a1a1b, 0 3.2px 0 ' + O + ', 0 4.8px 0 #e4e3df'; },
+      edgeBack: function (O) { return '0 1.5px 0 #dedcd7, 0 3.2px 0 ' + O + ', 0 4.8px 0 #111'; },
+      front: function (id, O) {
+        var base = '#0D0D0E', s = '<rect width="' + W + '" height="' + H + '" fill="' + base + '"/>';
+        s += '<text class="wm-measure" x="417" y="300" text-anchor="middle" font-size="68" font-weight="700" letter-spacing="-2" fill="' + PAPER + '" ' + FD + '>MaxConvert</text>';
+        s += '<g class="wm-period"><circle r="12" cx="-2" cy="-2" fill="#000"/><circle r="12" cx="2" cy="2" fill="#fff" opacity=".14"/><circle r="11" fill="' + O + '"/><circle r="11" fill="url(#' + id + '-foil)" opacity=".55"/><ellipse rx="5" ry="3" cx="-3" cy="-4" fill="#fff" opacity=".35"/></g>';
+        s += mono(425, 476, 16, '#7a7975', 'AI-ADAPTIVE CRM · GOHIGHLEVEL + HUBSPOT', 'text-anchor="middle"');
+        return svg(id, O, s + grain(id, .1, 'overlay'));
+      },
+      back: function (id, O) {
+        var s = '<rect width="' + W + '" height="' + H + '" fill="' + PAPER + '"/>';
+        s += mono(56, 86, 17, O, 'MAX CONVERT MEDIA', 'font-weight="500"');
+        s += details(56, 236, { name: BLACK, title: O, line: '#2b2b2c' });
+        s += mark(740, 440, 54, BLACK, PAPER);
+        return svg(id, O, s + grain(id, .16, 'multiply'));
+      }
+    }
+  ];
+
+  /* ---------- page ---------- */
+  var root = document.getElementById('options');
+  root.innerHTML = designs.map(function (d) {
+    return '<article class="opt" id="' + d.key + '">' +
+      '<div class="meta"><span class="tag">' + d.letter + '</span><h3>' + d.name + '</h3>' +
+      (d.pick ? '<span class="pick">Studio pick</span>' : '') +
+      '<p>' + d.pitch + '</p><dl>' + d.specs.map(function (s) { return '<div><dt>' + s[0] + '</dt><dd>' + s[1] + '</dd></div>'; }).join('') + '</dl></div>' +
+      '<div class="pair">' +
+        '<figure><figcaption><span>Front</span><span>85 × 55 mm</span></figcaption><div class="stage"><div class="card' + (d.rounded ? ' rounded' : '') + '" data-k="' + d.key + '" data-side="front"></div></div></figure>' +
+        '<figure><figcaption><span>Back</span><span>' + d.name + '</span></figcaption><div class="stage"><div class="card' + (d.rounded ? ' rounded' : '') + '" data-k="' + d.key + '" data-side="back"></div></div></figure>' +
+      '</div></article>';
+  }).join('');
+
+  var byKey = {}; designs.forEach(function (d) { byKey[d.key] = d; });
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+
+  function render() {
+    var O = state.orange;
+    document.documentElement.style.setProperty('--orange', O);
+    cards.forEach(function (el) {
+      var d = byKey[el.dataset.k], side = el.dataset.side, id = d.key + '-' + side;
+      el.innerHTML = d[side](id, O) + '<div class="glare"></div>';
+      el.style.setProperty('--edge', (side === 'front' ? d.edgeFront : d.edgeBack)(O));
+      el.setAttribute('aria-label', d.name + ', ' + side + ' of card');
+    });
+    placePeriods();
+  }
+  /* the triplex full stop sits right after the measured wordmark */
+  function placePeriods() {
+    document.querySelectorAll('.card svg').forEach(function (s) {
+      var t = s.querySelector('.wm-measure'), p = s.querySelector('.wm-period');
+      if (!t || !p) return;
+      try { var b = t.getBBox(); p.setAttribute('transform', 'translate(' + (b.x + b.width + 16) + ',' + 289 + ')'); } catch (e) {}
+    });
+  }
+
+  /* tilt + light */
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  cards.forEach(function (el) {
+    function move(e) {
+      var r = el.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      px = Math.min(1, Math.max(0, px)); py = Math.min(1, Math.max(0, py));
+      el.style.setProperty('--mx', (px * 100) + '%');
+      el.style.setProperty('--my', (py * 100) + '%');
+      if (!still) {
+        el.classList.add('live');
+        el.style.setProperty('--ry', ((px - .5) * 16) + 'deg');
+        el.style.setProperty('--rx', ((.5 - py) * 12) + 'deg');
+      }
+      el.querySelectorAll('.foil-grad').forEach(function (g) { g.setAttribute('gradientTransform', 'translate(' + ((px - .5) * 420) + ',' + ((py - .5) * 260) + ')'); });
+    }
+    function leave() {
+      el.classList.remove('live');
+      el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg');
+      el.style.setProperty('--mx', '30%'); el.style.setProperty('--my', '20%');
+      el.querySelectorAll('.foil-grad').forEach(function (g) { g.removeAttribute('gradientTransform'); });
+    }
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerleave', leave);
+    el.addEventListener('pointercancel', leave);
+  });
+
+  /* controls */
+  var pick = document.getElementById('oPick'), hex = document.getElementById('oHex');
+  var map = { fName: 'name', fTitle: 'title', fPhone: 'phone', fWeb: 'web', fEmail: 'email' };
+  Object.keys(map).forEach(function (fid) {
+    var inp = document.getElementById(fid);
+    inp.value = state[map[fid]];
+    inp.addEventListener('input', function () { state[map[fid]] = inp.value; save(); render(); });
+  });
+  function setOrange(v) { state.orange = v.toUpperCase(); pick.value = v.toLowerCase(); hex.value = state.orange; save(); render(); }
+  pick.value = state.orange.toLowerCase(); hex.value = state.orange;
+  pick.addEventListener('input', function () { setOrange(pick.value); });
+  hex.addEventListener('input', function () {
+    var v = hex.value.trim(); if (v[0] !== '#') v = '#' + v;
+    if (/^#[0-9a-fA-F]{6}$/.test(v)) setOrange(v);
+  });
+  document.getElementById('controls').addEventListener('submit', function (e) { e.preventDefault(); });
+
+  render();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(render);
+})();
+</script>
